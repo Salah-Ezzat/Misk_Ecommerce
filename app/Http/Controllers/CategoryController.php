@@ -13,8 +13,8 @@ class CategoryController extends Controller
     public function index()
     {
 
-        $categories= Category::all();
-        return view('categories.categories', compact('categories'));
+        $categories = Category::paginate(15);
+        return view('backend.categories.index', compact('categories'));
     }
 
     /**
@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return(1234);
+        return view('backend.categories.create');
     }
 
     /**
@@ -30,7 +30,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            
+                'category' => 'required|unique:categories|max:100|min:3',
+            ],[
+
+                'category.required' => 'يرجي إدخال اسم القسم',
+                'category.unique' => 'اسم القسم مسجل مسبقاً',
+            ]);
+            Category::create([
+                'category' => $request->category
+
+            ]);
+            session()->flash('Add', 'تم اضافة القسم بنجاح ');
+            return redirect('categories');
+
     }
 
     /**
@@ -46,7 +60,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+       return view('backend.categories.edit', compact('category'));
     }
 
     /**
@@ -54,14 +68,32 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        
+        $id= $category->id;
+        $this->validate($request,[
+            'category' => 'required|max:100|min:3|unique:categories,category,'.$id,
+        ],[
+            'category.required' => 'يرجي إدخال اسم القسم',
+            'category.unique' => 'اسم القسم مسجل مسبقاً',
+        ]);
+        $category= Category::findOrFail($id);
+        $category->update([
+
+            'category'=>$request->category
+        ]);
+        session()->flash('edit','تم تعديل القسم بنجاج');
+        return redirect('categories');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id); 
+        $category->delete(); 
+    
+        return redirect()->back()->with('delete', 'تم الحذف بنجاح');
     }
 }

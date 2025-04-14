@@ -32,32 +32,14 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'numeric', 'unique:'.User::class],
-            'password' => ['required', 'confirmed'],
-            'shop' => ['required', 'string', 'max:255'],
-            'province' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'cover' => ['required', 'string', 'max:255'],
-            'class' => ['required', 'integer', 'max:5'],
-            'code' => ['required', 'string', 'max:255'],
-            'min_limit' => ['required', 'integer'],
-            
-
+            'phone' => ['required', 'string', 'max:11', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'phone' => $request->phone,
-            'password' => $request->password,
-            'shop' => $request->shop,
-            'province' => $request->province,
-            'city' => $request->city,
-            'address' => $request->address,
-            'cover' => $request->cover,
-            'class' => $request->class,
-            'code' => $request->code,
-            'min_limit' => $request->min_limit,
+            'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));

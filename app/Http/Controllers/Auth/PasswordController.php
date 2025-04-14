@@ -17,11 +17,11 @@ class PasswordController extends Controller
     {
         $validated = $request->validateWithBag('updatePassword', [
             'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'confirmed'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
         $request->user()->update([
-            'password' => $validated['password'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         return back()->with('status', 'password-updated');
