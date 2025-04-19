@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\ProvinceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +24,12 @@ Route::get('/', function () {
 });
 Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
+Route::resource('users', UserController::class);
+Route::get('/confirm_add', [UserController::class, 'confirm_add'])->name('users.confirm_add');
+Route::resource('provinces', ProvinceController::class);
+Route::resource('cities', CityController::class);
+
+
 
 Route::get('/index', function () {
     return view('backend.index');

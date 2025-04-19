@@ -27,7 +27,11 @@
                                     <div class="form-group">
                                         <label>القسم</label>
                                         <input type="text" name="category" class="form-control"
-                                            value="{{ $category->category }}">
+                                        value="{{old('category', $category->category) }}">
+                                        @error('category')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                     </div>
                             </div>
                             <div class="card-footer text-right">

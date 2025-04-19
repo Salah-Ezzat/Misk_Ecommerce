@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Image;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -26,10 +27,12 @@ class User extends Authenticatable
         'city',
         'address',
         'cover',
-        'class',
+        'role_id',
         'code' ,
         'min_limit',
-        'email'
+        'email',
+        'confirm_add'
+
     ];
 
     /**
@@ -50,4 +53,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function image(){
+
+        return $this->hasOne(Image::class);
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function cityRelation()
+    {
+        return $this->belongsTo(City::class, 'city');
+    }
+
+
+
+
 }

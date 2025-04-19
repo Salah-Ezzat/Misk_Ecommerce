@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('image');
-            $table->foreignId('pro_id')->nullable();
-            $table->foreignId('user_id')->nullable();
+
+            // العلاقة مع المنتجات
+            $table->foreignId('pro_id')->nullable()->constrained('products')->onDelete('cascade');
+
+            // العلاقة مع المستخدمين
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

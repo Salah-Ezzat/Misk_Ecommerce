@@ -65,18 +65,25 @@
                                             <th>المنتج</th>
                                             <th>العبوة</th>
                                             <th>القسم</th>
+                                            <th>صورة المنتج</th>
                                             <th>التحكم</th>
                                         </tr>
-                                        <?php $i = 0; ?>
+                                       
 
                                         @foreach ($products as $index => $product)
-                                            <?php $i++; ?>
+                                            
                                             <tr>
                                                 <td>{{ $products->firstItem() + $index }}</td>
                                                 <td>{{ $product->product }}</td>
                                                 <td>{{ $product->pack }}</td>
                                                 <td>{{ $product->category->category }}</td>
-
+                                                <td style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                                    @foreach ($product->images as $image)
+                                                        <img src="{{ asset('backend/assets/img/images/' . $image->image) }}" 
+                                                             alt="Image"
+                                                             style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px;">
+                                                    @endforeach
+                                                </td>
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <a href="{{ route('products.edit', $product->id) }}"
@@ -86,6 +93,7 @@
                                                             onsubmit="return confirm('هل أنت متأكد من الحذف؟')">
                                                             @csrf
                                                             @method('DELETE')
+
                                                             <button class="btn btn-danger" type="submit">حذف</button>
                                                         </form>
                                                     </div>

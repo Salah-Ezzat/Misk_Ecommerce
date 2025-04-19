@@ -10,14 +10,20 @@
       <li><a class="nav-link" href="{{ route('categories.index') }}"><i class="fas fa-th-large"></i> <span>الأقسام</span></a></li>
       <li><a class="nav-link" href="{{ route('products.index') }}"><i class="fas fa-th"></i> <span>المنتجات</span></a></li>
 
-
       <ul class="sidebar-menu">
-        <li class="menu-header">Dashboard</li>
-        <li class="dropdown active">
-          <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+        <li class="menu-header">بيانات العملاء</li>
+        <li class="dropdown">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>العملاء</span></a>
           <ul class="dropdown-menu">
-            <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
-            <li class=active><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
+            <li class=active><a class="nav-link" href="{{ route('users.index') }}"> قائمة العملاء </a></li>
+            <li ><a class="nav-link" href="{{ route('users.confirm_add') }}">طلبات الإضافة</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>إدارة المحافظات والمدن</span></a>
+          <ul class="dropdown-menu">
+            <li class=active><a class="nav-link" href="{{ route('provinces.index') }}"> إدارة المحافظات  </a></li>
+            <li ><a class="nav-link" href="{{ route('cities.index') }}">إدارة المدن </a></li>
           </ul>
         </li>
         <li class="menu-header">Starter</li>

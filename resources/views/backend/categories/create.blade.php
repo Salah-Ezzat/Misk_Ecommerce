@@ -25,8 +25,11 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>القسم</label>
-                                        <input type="text" name="category" class="form-control"
+                                        <input type="text" name="category" value="{{ old('category') }}" class="form-control"
                                             placeholder="أضف قسم جديد..">
+                                            @error('category')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                             </div>
                             <div class="card-footer text-right">

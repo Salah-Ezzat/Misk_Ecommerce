@@ -65,10 +65,10 @@
                                             <th>القسم</th>
                                             <th>التحكم</th>
                                         </tr>
-                                        <?php $i = 0; ?>
+                                      
 
                                         @foreach ($categories as $index => $category)
-                                            <?php $i++; ?>
+                                            
                                             <tr>
                                                 <td>{{ $categories->firstItem() + $index }}</td>
                                                 <td>{{ $category->category }}</td>
@@ -78,7 +78,7 @@
                                                             class="btn btn-primary">تعديل</a>
                                                         <form action="{{ route('categories.destroy', $category->id) }}"
                                                             method="POST"
-                                                            onsubmit="return confirm('هل أنت متأكد من الحذف؟')">
+                                                            onsubmit="return confirm('هل أنت متأكد من حذف {{ e($category->category) }}؟')">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger" type="submit">حذف</button>

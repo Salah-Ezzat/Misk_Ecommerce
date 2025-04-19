@@ -23,8 +23,7 @@ return new class extends Migration
             $table->string('province');
             $table->string('city');
             $table->string('address');
-            $table->tinyInteger('class');
-            $table->string('code');
+            $table->foreignId('role_id')->references('id')->on('roles')->onDelete('set null');            $table->string('code');
             $table->string('cover');
             $table->integer('min_limit');
             $table->tinyInteger('confirm_add')->default(0);

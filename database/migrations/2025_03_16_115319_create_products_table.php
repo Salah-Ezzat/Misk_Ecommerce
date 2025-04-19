@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('product');
-            $table->foreignId('cat_id')->references('id')->on('categories')->onDelete('restrict');
+            $table->foreignId('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('pack');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
