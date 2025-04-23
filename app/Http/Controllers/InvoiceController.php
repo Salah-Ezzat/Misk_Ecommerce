@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 
@@ -34,9 +35,12 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice)
+    public function show($id)
     {
-        //
+        $invoice= Invoice::findOrFail($id);
+        $carts= Cart::where('invoice_id', $id)->with('product', 'user', 'invoice', 'product.firstImage')->get();
+
+        return view('frontend.invoices.invoice', compact('carts', 'invoice'));
     }
 
     /**

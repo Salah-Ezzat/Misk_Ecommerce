@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('seller_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreignId('seller_id')->references('id')->on('users')->onDelete('restrict');
             $table->float('invoice_total');
             $table->tinyInteger('confirm');
             $table->tinyInteger('done');

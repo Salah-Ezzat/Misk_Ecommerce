@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pro_id');
-            $table->foreignId('user_id');
+            $table->foreignId('pro_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('stock');
             $table->float('price');
             $table->float('sale');
-            $table->string('max_limit');
-            $table->foreignId('cat_id');
-            $table->tinyInteger('class');
+            $table->string('max_limit')->default('غير محدودة');
+            $table->foreignId('cat_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Stock;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StockController extends Controller
 {
@@ -12,8 +15,25 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $id = Auth::user()->id;
+        $stocks = Stock::where('user_id', $id)->get('pro_id');
+        $products = Product::whereNotIn('id', $stocks)->with('images')->paginate(15);
+        return view('frontend.stocks.index', compact('products'));
     }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function displayed()
+    {
+        $id = Auth::user()->id;
+        $stocks = Stock::where('user_id', $id)->get();
+        $proIds = $stocks->pluck('pro_id');
+        $products = Product::whereIn('id', $proIds)->with('images')->paginate(15);
+        return view('frontend.stocks.displayed', compact('products', 'stocks'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -34,10 +54,17 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Stock $stock)
+    public function show($id)
     {
-        //
+        $shop = User::where('id', $id)->first('shop');
+        $stocks = Stock::where('user_id', $id)->get();
+        $proIds = $stocks->pluck('pro_id');
+        $userId= $id;
+        $products = Product::whereIn('id', $proIds)->with('firstImage', 'category','stocks')->paginate(15);
+        return view('frontend.traders.seller', compact('products', 'stocks', 'shop','userId'));
     }
+
+  
 
     /**
      * Show the form for editing the specified resource.
@@ -58,8 +85,11 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
+    public function destroy($id)
     {
-        //
+        $stock = Stock::findOrFail($id);
+        $stock->delete();
+
+        return redirect()->back()->with('delete', 'تم الحذف بنجاح');
     }
 }

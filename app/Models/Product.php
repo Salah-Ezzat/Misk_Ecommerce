@@ -21,4 +21,18 @@ class Product extends Model
     {
         return $this->hasMany(Image::class, 'pro_id');
     }
+
+    public function firstImage()
+    {
+        return $this->hasOne(Image::class, 'pro_id')->oldestOfMany(); // يجيب أول صورة
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(stock::class, 'pro_id');
+    }
+
+  
+    
+
 }

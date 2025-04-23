@@ -9,17 +9,40 @@ use App\Models\Image;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+
     public function index()
     {
         $users = User::with('image')->paginate(15);
         return view('backend.users.index', compact('users'));
     }
+
+    public function wholesalers()
+    {
+        $city = Auth::user()->city;
+        $users = User::where('role_id', 2)
+            ->where('cover', 'like', '%' . $city . '%')
+            ->with('image')->paginate(15);
+        return view('frontend.traders.wholesalers', compact('users'));
+    }
+
+    public function traders()
+    {
+        $city = Auth::user()->city;
+        $users = User::where('role_id', 3)
+            ->where('cover', 'like', '%' . $city . '%')
+            ->with('image')->paginate(15);
+        return view('frontend.traders.traders', compact('users'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -113,17 +136,14 @@ class UserController extends Controller
 
         ]);
 
-        if ($request->filled('password'))
-        {
-           User::update(['password' => $request->password]); 
+        if ($request->filled('password')) {
+            User::update(['password' => $request->password]);
         };
-        if ($request->filled('cover'))
-        {
+        if ($request->filled('cover')) {
             $coverage = array_filter($request->cover); // يحذف العناصر الفارغة
             $coverage = array_unique($coverage); // يحذف العناصر المكررة
             $cover = implode(',', $coverage); // تحويل المصفوفة إلى سلسلة مفصولة بفواصل
             $user->update(['cover' => $cover]);
-
         }
 
 
@@ -134,19 +154,18 @@ class UserController extends Controller
                 unlink($oldPath); // حذف الصورة من السيرفر
             }
             $user->image->delete(); // حذف من قاعدة البيانات
-        
-         // نرفع الصور الجديدة
-        $image= $request->file('image');
-        $imageName = time() . '_' . uniqid() . '.' . $image->extension();
-        $image->move(public_path('backend/assets/img/images'), $imageName);
 
-           // نحفظ الصور في الجدول
-           
+            // نرفع الصور الجديدة
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->extension();
+            $image->move(public_path('backend/assets/img/images'), $imageName);
+
+            // نحفظ الصور في الجدول
+
             Image::create(['user_id' => $user->id, 'image' => $imageName]);
-
         }
-            session()->flash('edit', 'تم تعديل بيانات العميل بنجاح ');
-            return redirect(session('previous_url', route('users.index')));
+        session()->flash('edit', 'تم تعديل بيانات العميل بنجاح ');
+        return redirect(session('previous_url', route('users.index')));
     }
 
     /**
@@ -157,23 +176,22 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         // حذف الصور من السيرفر وقاعدة البيانات
-        $image= $user->image;
-            $imagePath = public_path('backend/assets/img/images/' . $image->image);
-    
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-    
-            $image->delete();
-       
-    
+        $image = $user->image;
+        $imagePath = public_path('backend/assets/img/images/' . $image->image);
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        $image->delete();
+
+
         // حذف المنتج
         $user->delete();
-    
+
         session()->flash('delete', 'تم حذف بيانات العميل وصوره بنجاح');
-    
+
         return redirect()->back();
-    
     }
     /**
      * Display a listing of the Add Requests need Confirmation.
@@ -181,7 +199,7 @@ class UserController extends Controller
 
     public function confirm_add()
     {
-        $users = User::where ('confirm_add', 0)->with('image')->paginate(15);
+        $users = User::where('confirm_add', 0)->with('image')->paginate(15);
         return view('backend.users.confirm_add', compact('users'));
     }
 }
