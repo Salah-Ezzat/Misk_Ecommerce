@@ -16,12 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->foreignId('seller_id')->references('id')->on('users')->onDelete('restrict');
             $table->float('invoice_total');
-            $table->tinyInteger('confirm');
-            $table->tinyInteger('done');
-            $table->tinyInteger('prepare');
-            $table->float('real_total');
-            $table->tinyInteger('edit_cause');
-            $table->string('notes');
+            $table->tinyInteger('confirm')->default(0);
+            $table->tinyInteger('done')->default(0);
+            $table->tinyInteger('prepare')->default(0);
+            $table->float('real_total')->default(0);
+            $table->foreignId('edit_cause')->nullable()->constrained('causes')->nullOnDelete();
+            $table->string('notes')->default('لا توجد توصيات');
+            $table->tinyInteger('requested')->default(0);
             $table->timestamps();
         });
     }

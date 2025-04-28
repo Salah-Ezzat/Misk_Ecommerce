@@ -17,7 +17,8 @@ class Invoice extends Model
         'confirm',
         'prepare',
         'edit_cause',
-        'notes'
+        'notes',
+        'requested'
 ];
 
 
@@ -40,6 +41,15 @@ public function seller()
 public function carts()
 {
     return $this->hasMany(Product::class, 'invoice_id');
+}
+public function cause()
+{
+    return $this->hasOne(Cause::class, 'edit_cause');
+}
+
+public function orders()
+{
+    return $this->hasMany(Order::class, 'invoice_id');
 }
 
 

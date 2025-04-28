@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\BannerController;
-use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProvinceController;
-use App\Http\Controllers\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +39,18 @@ Route::resource('stocks', StockController::class);
 Route::get('/displayed', [StockController::class, 'displayed'])->name('stocks.displayed');
 Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
 Route::put('/banners/{id}/update-image', [BannerController::class, 'updateImage'])->name('banners.updateImage');
+Route::delete('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::put('carts', [CartController::class, 'bulkUpdate'])->name('carts.update.bulk');
+Route::get('carts/{id}/delete', [CartController::class, 'destroy'])->name('carts.delete');
 Route::resource('carts', CartController::class);
+Route::get('invoices/{id}/prepare', [InvoiceController::class, 'prepare'])->name('invoices.prepare');
+Route::get('invoices/done', [InvoiceController::class, 'doneInvoices'])->name('invoices.doneInvoices');
+Route::get('invoices/cancelled', [InvoiceController::class, 'cancelledInvoices'])->name('invoices.cancelledInvoices');
+Route::get('invoices/prepared', [InvoiceController::class, 'preparedInvoices'])->name('invoices.preparedInvoices');
+Route::get('invoices/new', [InvoiceController::class, 'newInvoices'])->name('invoices.newInvoices');
 Route::resource('invoices', InvoiceController::class);
+Route::post('/order/add', [OrderController::class, 'add'])->name('order.add');
+Route::resource('orders', OrderController::class);
 
 
 

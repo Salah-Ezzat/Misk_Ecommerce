@@ -39,4 +39,9 @@ class Stock extends Model
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public function orders()
+{
+    return $this->belongsToMany(Order::class, 'stock_id');
+}
 }
