@@ -1,6 +1,7 @@
 @extends('frontend.layout.main')
 
 @section('content')
+<?php session(['previous_previous_url' => url()->current()]); ?>
     <div class="row">
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
             <div class="dashboard_content mt-2 mt-md-0">
@@ -19,7 +20,7 @@
                                                         <i class="fas fa-map-marked-alt fa-3x text-warning mb-3"></i>
                                                         <h5 class="card-title text-dark">عذرًا!</h5>
                                                         <p class="card-text text-muted">
-                                                            لا توجد تغطية بضاعة معروضة للتاجر حاليًا.
+                                                            لا توجد  بضاعة معروضة للتاجر حاليًا.
                                                         </p>
                                                         <p class="text-secondary" style="font-size: 14px;">
                                                             سيتم عرض بضاعة جديدة للتاجر قريبًا.
@@ -70,7 +71,7 @@
                                                                         <strong>الحد الأقصى للشراء
                                                                             :</strong> {{ $stock->max_limit }}
                                                                     </p>
-                                                                    <a href="{{ route('order.show', $user->id) }}" class="btn btn-outline-primary mt-2 px-4">
+                                                                    <a href="{{ route('orders.show', $userId) }}" class="btn btn-outline-primary mt-2 px-4">
                                                                         <i class="fas fa-shopping-cart"></i> طلب شراء
                                                                     </a>
                                                                     

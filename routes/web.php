@@ -50,6 +50,8 @@ Route::get('invoices/prepared', [InvoiceController::class, 'preparedInvoices'])-
 Route::get('invoices/new', [InvoiceController::class, 'newInvoices'])->name('invoices.newInvoices');
 Route::resource('invoices', InvoiceController::class);
 Route::post('/order/add', [OrderController::class, 'add'])->name('order.add');
+Route::get('orders/{id}/show', [OrderController::class, 'show'])->name('orders.show');
+Route::get('orders/{invoice_id}/editform', [OrderController::class, 'editform'])->name('orders.editform');
 Route::resource('orders', OrderController::class);
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -31,7 +32,31 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $invoice = Invoice::create([
+            'user_id' => Auth::user()->id,
+            'seller_id' => $request->seller_id,
+            'invoice_total' => $request->invoice_total
+        ]);
+        $invoice_id = $invoice->id;
+        $count = count($request->stock_ids);
+        $product_ids = $request->product_ids;
+        $quantity = $request->quantity;
+        $prices = $request->prices;
+        $previous= $request->previous_url;
+
+        for ($i = 0; $i < $count; $i++) {
+            $cart = Cart::create([
+                'pro_id' => $product_ids[$i],
+                'user_id' => Auth::user()->id,
+                'seller_id' => $request->seller_id,
+                'quantity' => $quantity[$i],
+                'price' => $prices[$i],
+                'invoice_id' => $invoice_id,
+                'invoice_total' => $request->invoice_total,
+            ]);
+        }
+        return redirect($previous)->with('success', 'تم إرسال طلب الشراء بنجاح.');
+
     }
 
     /**
