@@ -80,7 +80,7 @@
 
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="remember" class="custom-control-input"
+                                            <input type="checkbox" name="remember_token" class="custom-control-input"
                                                 tabindex="3" id="remember-me">
                                             <label class="custom-control-label" for="remember-me">تذكرني</label>
                                         </div>

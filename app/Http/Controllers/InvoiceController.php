@@ -71,6 +71,19 @@ class InvoiceController extends Controller
     
     }
 
+    public function confirm($id)
+    {
+        
+        $invoice_confirm= Invoice::findOrFail($id);
+        $invoice_confirm->update([
+            'confirm'=>1
+        ]);
+
+        return redirect()->to(route('invoices.suspendInvoices'))
+        ->with('success', 'تم تأكيد الفاتورة بنجاح');
+    
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -82,9 +95,12 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invoice $invoice)
+    public function destroy($id)
     {
-        //
+        $invoice = Invoice::findOrFail($id);
+        $invoice->delete();
+
+        return redirect()->back()->with('delete', 'تم الحذف بنجاح');
     }
 
     public function doneInvoices()
@@ -123,5 +139,13 @@ class InvoiceController extends Controller
                           ->with('user', 'seller')
                           ->paginate(15);
         return view('frontend.invoices.newInvoices', compact('invoices'));
+    }
+
+    public function suspendInvoices()
+    {
+        $invoices= Invoice::where('confirm', 0)                          
+                          ->with('user', 'seller')
+                          ->paginate(15);
+        return view('frontend.invoices.suspendInvoices', compact('invoices'));
     }
 }

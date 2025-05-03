@@ -91,7 +91,7 @@
                                         <div class="form-group col-md-6">
                                             <label class="text-danger">المدينة</label>
                                             <select class="form-control" id="city" name="city">
-                                                <option value="{{ $user->city}}" selected >{{ $user->cityRelation->city }} </option>
+                                                <option value="{{ $user->city}}" selected >{{ is_numeric($user->city) ? $user->cityRelation->city : $user->city }} </option>
                                                 {{-- يتم تعبئتها ديناميكيًا بالـ JS حسب المحافظة --}}
                                             </select>
                                         </div>

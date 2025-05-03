@@ -31,7 +31,7 @@
                                             @foreach ($products as $product)
                                             @php
                                                 $stock = $product->stocks->where('user_id', $userId)->first();
-                                                $price = $stock->price;
+                                                $price = $stock->price - $stock->sale;
                                                 $max_limit = $stock->max_limit;
                                                 $min_limit = $stock->max_limit;
         
@@ -49,7 +49,7 @@
 
                                                                 <div class="wsus__product_details overflow-hidden">
 
-                                                                    <a href="#">
+                                                                    <a href="{{ route('stocks.comparePrices', $stock->product->id) }}">
                                                                         <h5 class="mb-2 text-primary fw-bold"
                                                                             style="font-size: 18px;">
                                                                         
@@ -63,8 +63,18 @@
                                                                     </p>
 
                                                                     <p class="mb-1 text-danger">
-                                                                        <strong>
-                                                                            السعر:</strong> {{ $price }}
+                                                                         @if ($stock->sale > 0)
+                                                                        <p class="wsus__price text-success">
+                                                                           
+                                                                            {{ number_format($stock->price - $stock->sale, 2)}}
+                                                                            <del
+                                                                                class="text-muted">{{ number_format($stock->price, 2) }}</del>
+                                                                        </p>
+                                                                    @else
+                                                                        <p class="wsus__price text-success">
+                                                                         
+                                                                            {{ number_format($stock->price, 2) }} </p>
+                                                                    @endif
                                                                     </p>
 
                                                                     <p class="mb-0 text-success">

@@ -27,12 +27,19 @@ class StockController extends Controller
     public function displayed()
     {
         $id = Auth::user()->id;
-        $stocks = Stock::where('user_id', $id)->get();
+        $stocks = Stock::where('user_id', $id)->paginate(15);
         $proIds = $stocks->pluck('pro_id');
-        $products = Product::whereIn('id', $proIds)->with('images')->paginate(15);
+        $products = Product::whereIn('id', $proIds)->with('images')->get();
         return view('frontend.stocks.displayed', compact('products', 'stocks'));
     }
-
+    public function comparePrices($pro_id)
+    {
+        $stocks = Stock::where('pro_id', $pro_id)->paginate(15);
+        $userIds = $stocks->pluck('user_id');
+        $users = User::whereIn('id', $userIds)->with('image')->get();
+        $product = Product::where('id', $pro_id)->with('images')->first();
+        return view('frontend.stocks.comparePrices', compact('users', 'stocks', 'product'));
+    }
 
 
     /**
@@ -56,7 +63,7 @@ class StockController extends Controller
      */
     public function show($id)
     {
-        $shop = User::where('id', $id)->first('shop');
+        $shop = User::where('id', $id)->first();
         $stocks = Stock::where('user_id', $id)->get();
         $proIds = $stocks->pluck('pro_id');
         $userId= $id;

@@ -29,7 +29,7 @@
                                                                 <div class="wsus__product_details overflow-hidden">
 
                                                                     <a class="wsus__pro_name d-block fw-bold text-primary"
-                                                                        href="#"
+                                                                        href="{{ route('stocks.comparePrices', $stock->product->id) }}"
                                                                         style="max-width: 100%; font-size: 18px;">
                                                                         {{ $stock->product->product }}
                                                                     </a>
@@ -45,15 +45,14 @@
                                                                             <del
                                                                                 class="text-muted">{{ number_format($stock->price, 2) }}</del>
                                                                         </p>
+                                                                        <p class="wsus__pro_name d-block fw-bold text-truncate"
+                                                                            style="max-width: 100%;">
+                                                                            {{ 'العرض : ' . number_format($stock->sale, 2) }}
+                                                                        </p>
                                                                     @else
                                                                         <p class="wsus__price text-success">
                                                                             {{ number_format($stock->price, 2) }} </p>
                                                                     @endif
-
-                                                                    <p class="wsus__pro_name d-block fw-bold text-truncate"
-                                                                        style="max-width: 100%;">
-                                                                        {{ 'العرض : ' . number_format($stock->sale, 2) }}
-                                                                    </p>
 
                                                                     <div class="d-flex gap-2">
 
@@ -100,7 +99,7 @@
                                 <nav class="d-inline-block">
                                     <!-- Pagination Links -->
                                     <div class="pagination">
-                                        {{ $products->links() }}
+                                        {{ $stocks->links() }}
                                     </div>
                                 </nav>
                             </div>

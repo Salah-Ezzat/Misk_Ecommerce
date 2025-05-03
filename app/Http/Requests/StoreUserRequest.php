@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -21,7 +22,7 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'shop' => ['required', 'string'],
             'name' => ['required', 'string'],
             'province' => ['required', 'string'],
@@ -40,8 +41,8 @@ class StoreUserRequest extends FormRequest
             $rules['password'] = 'required|min:4|confirmed';
         } elseif ($this->isMethod('PUT') || $this->isMethod('patch')) {
             // حالة التعديل
-            $userId = $this->route('id');
-            $rules['phone'] = ['required', 'digits:11', 'regex:/^(010|011|012|015)[0-9]{8}$/',  'unique:users,phone,' . $userId,];
+            $userId = $this->route('user');
+            $rules['phone'] = ['required', 'digits:11', 'regex:/^(010|011|012|015)[0-9]{8}$/',  Rule::unique('users', 'phone')->ignore($userId),];
             $rules['password'] = 'nullable|min:4|confirmed';
         }
 

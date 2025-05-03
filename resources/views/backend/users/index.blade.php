@@ -1,6 +1,7 @@
 @extends('backend.main')
 
 @section('content')
+<?php session(['previous_previous_url' => url()->current()]); ?>
 
     <!-- Main Content -->
     <div class="main-content">

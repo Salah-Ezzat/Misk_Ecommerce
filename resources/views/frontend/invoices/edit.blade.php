@@ -55,7 +55,7 @@
                                     <h6>{{ $invoice->user->shop }}</h6>
                                     <p>تليفون :{{ $invoice->user->phone }}</p>
                                     <p>العنوان :{{ $invoice->user->address }}</p>
-                                    <p>{{ $invoice->user->city . '-' . $invoice->user->province }}</p>
+                                    <p>{{ $invoice->user->cityRelation->city . '-' . $invoice->user->province }}</p>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 mb-5 mb-md-0">
@@ -73,7 +73,7 @@
                                     <h6>{{ $invoice->seller->shop }}</h6>
                                     <p>تليفون :{{ $invoice->seller->phone }}</p>
                                     <p>العنوان :{{ $invoice->seller->address }}</p>
-                                    <p>{{ $invoice->seller->city . '-' . $invoice->seller->province }}</p>
+                                    <p>{{ $invoice->seller->cityRelation->city . '-' . $invoice->seller->province }}</p>
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,7 @@
                                     <h6>{{ $invoice->user->shop }}</h6>
                                     <p>تليفون :{{ $invoice->user->phone }}</p>
                                     <p>العنوان :{{ $invoice->user->address }}</p>
-                                    <p>{{ $invoice->user->city . '-' . $invoice->user->province }}</p>
+                                    <p>{{ $invoice->user->cityRelation->city . '-' . $invoice->user->province }}</p>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 mb-5 mb-md-0">
@@ -36,7 +36,7 @@
                                     <h6>{{ $invoice->seller->shop }}</h6>
                                     <p>تليفون :{{ $invoice->seller->phone }}</p>
                                     <p>العنوان :{{ $invoice->seller->address }}</p>
-                                    <p>{{ $invoice->seller->city . '-' . $invoice->seller->province }}</p>
+                                    <p>{{ $invoice->seller->cityRelation->city . '-' . $invoice->seller->province }}</p>
                                 </div>
                             </div>
                         </div>
@@ -85,10 +85,10 @@
                                         </td>
 
                                         <td class="quentity">
-                                            {{ $cart->new_quantity }}
+                                            {{ $cart->new_quantity == 0 ? $cart->quantity : $cart->new_quantity }}
                                         </td>
                                         <td class="total">
-                                            {{ $cart->new_total }}
+                                            {{ number_format(($cart->new_quantity == 0 ? $cart->quantity : $cart->new_quantity) * $cart->price, 2) }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -99,7 +99,7 @@
                 </div>
                 <div class="wsus__invoice_footer">
 
-                    <p><span>إجمالي الفاتورة:</span> جنيه {{ $invoice->real_total }} </p>
+                    <p><span>إجمالي الفاتورة:</span> جنيه {{ number_format($invoice->real_total == 0 ? $invoice->invoice_total: $invoice->real_total, 2) }} </p>
                 </div>
                 <div class="text-center my-4">
                     <!-- زر العودة -->

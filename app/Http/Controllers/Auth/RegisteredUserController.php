@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\City;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Province;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -22,7 +25,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $provinces= Province::all();
+        $roles= Role::all();
+        $cities = City::all();
+
+        return view('auth.register', compact('provinces', 'roles','cities'));
     }
 
     /**

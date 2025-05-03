@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function wholesalers()
     {
-        $city = Auth::user()->city;
+        $city = Auth::user()->cityRelation->city;
         $users = User::where('role_id', 2)
             ->where('cover', 'like', '%' . $city . '%')
             ->with('image')->paginate(15);
@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function traders()
     {
-        $city = Auth::user()->city;
+        $city = Auth::user()->cityRelation->city;
         $users = User::where('role_id', 3)
             ->where('cover', 'like', '%' . $city . '%')
             ->with('image')->paginate(15);
@@ -89,6 +89,32 @@ class UserController extends Controller
         }
         session()->flash('Add', 'تم اضافة العميل بنجاح ');
         return redirect('users');
+    }
+    public function creatAccount(StoreUserRequest $request)
+    {
+
+
+
+        $user = User::create([
+            'name' => $request->name,
+            'password' => $request->password,
+            'phone' => $request->phone,
+            'shop' => $request->shop,
+            'province' => $request->province,
+            'city' => $request->city,
+            'address' => $request->address,
+            'role_id' => $request->role_id,
+
+
+        ]);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->extension();
+            $image->move(public_path('backend/assets/img/images'), $imageName);
+            Image::create(['user_id' => $user->id, 'image' => $imageName]);
+        }
+        session()->flash('Add', 'تم إنشاء الحساب بنجاح وفي انتظار موافقة الأدمن ');
+        return redirect('register');
     }
 
     /**
@@ -149,12 +175,13 @@ class UserController extends Controller
 
 
         if ($request->hasFile('image')) {
-            $oldPath = public_path('backend/assets/img/images/' . $user->image->image);
-            if (file_exists($oldPath)) {
-                unlink($oldPath); // حذف الصورة من السيرفر
+            if ($user->image) {
+                $oldPath = public_path('backend/assets/img/images/' . $user->image->image);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath); // حذف الصورة من السيرفر
+                }
+                $user->image->delete(); // حذف من قاعدة البيانات
             }
-            $user->image->delete(); // حذف من قاعدة البيانات
-
             // نرفع الصور الجديدة
             $image = $request->file('image');
             $imageName = time() . '_' . uniqid() . '.' . $image->extension();
@@ -176,17 +203,16 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         // حذف الصور من السيرفر وقاعدة البيانات
-        $image = $user->image;
-        $imagePath = public_path('backend/assets/img/images/' . $image->image);
-
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
+        if ($user->image) {
+            $image = $user->image;
+            $imagePath = public_path('backend/assets/img/images/' . $image->image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $image->delete();
         }
 
-        $image->delete();
 
-
-        // حذف المنتج
         $user->delete();
 
         session()->flash('delete', 'تم حذف بيانات العميل وصوره بنجاح');
