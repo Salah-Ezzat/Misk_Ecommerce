@@ -88,7 +88,7 @@
                                     المعروضة</a></li>
                             <li><a href="dsahboard_profile.html"><i class="far fa-user"></i> My Profile</a></li>
                             <li><a href="dsahboard_address.html"><i class="fal fa-gift-card"></i> Addresses</a></li>
-                            <li><a href="#"><i class="far fa-sign-out-alt"></i> Log out</a></li>
+                            <li><a href="{{ route('logout') }}"><i class="far fa-sign-out-alt"></i> تسجيل خروج</a></li>
                         </ul>
                     </div>
                 </div>
