@@ -53,7 +53,13 @@
                         </ul>
                         <ul class="wsus__menu_item wsus__menu_item_right">
                             <li><a href="{{ route('profile') }}">بياناتي</a></li>
-                            <li><a href="{{ route('logout') }}">تسجيل خروج</a></li>
+                            <li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
+                            <a href="#"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">تسجيل خروج</a></li>
                         </ul>
                     </div>
                 </div>

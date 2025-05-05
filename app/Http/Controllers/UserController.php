@@ -27,7 +27,7 @@ class UserController extends Controller
     public function wholesalers()
     {
         $city = Auth::user()->cityRelation->city;
-        $users = User::where('role_id', 2)
+        $users = User::where('role_id', 3)
             ->where('cover', 'like', '%' . $city . '%')
             ->with('image')->paginate(15);
         return view('frontend.traders.wholesalers', compact('users'));
@@ -36,7 +36,7 @@ class UserController extends Controller
     public function traders()
     {
         $city = Auth::user()->cityRelation->city;
-        $users = User::where('role_id', 3)
+        $users = User::where('role_id', 2)
             ->where('cover', 'like', '%' . $city . '%')
             ->with('image')->paginate(15);
         return view('frontend.traders.traders', compact('users'));

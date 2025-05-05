@@ -1,4 +1,28 @@
 @extends('frontend.layout.main')
+@section('sidebar_tabs')
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link " id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab"
+                aria-controls="pills-home" aria-selected="true">الأقسام</button>
+        </li>
+   
+@endsection
+@section('categories_list')
+    <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="wsus__mobile_menu_main_menu">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <ul class="wsus_mobile_menu_category">
+                    <li><a href="{{ request()->url() }}?cat_id=0"><i class="fal fa-gem"></i> عرض الكل </a></li>
+                    @foreach ($categories as $category)
+                        <li><a href="{{ request()->url() }}?cat_id={{ $category->id }}"><i class="fas fa-star"></i>
+                                {{ $category->category }}</a></li>
+                    @endforeach
+
+                </ul>
+            </div>
+        </div>
+    </div>
+@endsection
 
 @section('content')
 <?php session(['previous_previous_url' => url()->current()]); ?>
@@ -20,10 +44,10 @@
                                                         <i class="fas fa-map-marked-alt fa-3x text-warning mb-3"></i>
                                                         <h5 class="card-title text-dark">عذرًا!</h5>
                                                         <p class="card-text text-muted">
-                                                            لا توجد  بضاعة معروضة للتاجر حاليًا.
+                                                            لا توجد  بضاعة معروضة حاليًا.
                                                         </p>
                                                         <p class="text-secondary" style="font-size: 14px;">
-                                                            سيتم عرض بضاعة جديدة للتاجر قريبًا.
+                                                            سيتم عرض بضاعة جديدة قريبًا.
                                                         </p>
                                                     </div>
                                                 </div>
@@ -100,7 +124,7 @@
                                 <nav class="d-inline-block">
                                     <!-- Pagination Links -->
                                     <div class="pagination">
-                                        {{ $products->links() }}
+                                        {{ $products->appends(request()->query())->links() }}
                                     </div>
                                 </nav>
                             </div>

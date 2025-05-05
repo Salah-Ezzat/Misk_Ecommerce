@@ -35,36 +35,16 @@
             </span>
             <a href="dsahboard.html" class="dash_logo"><img src="{{ asset('frontend/images/logo.png') }}" alt="logo"
                     class="img-fluid"></a>
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile"
-                        aria-selected="false">القائمة الرئيسية</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link " id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                        role="tab" aria-controls="pills-home" aria-selected="true">الأقسام</button>
-                </li>
-            </ul>
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item active" role="presentation">
+                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab"
+                                aria-controls="pills-profile" aria-selected="false">القائمة الرئيسية</button>
+                        </li>
+            @yield('sidebar_tabs')
+        </ul>
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="wsus__mobile_menu_main_menu">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <ul class="wsus_mobile_menu_category">
-                                @php
-                                    use App\Models\Category;
-                                    $categories = Category::all();
-                                @endphp
-                                @foreach ($categories as $category)
-                                    <li><a href="#"><i class="fas fa-star"></i> {{ $category->category }}</a></li>
-                                @endforeach
-                                <li><a href="#"><i class="fal fa-gem"></i> View All Categories</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                @yield('categories_list')
+                <div class="tab-pane fade show-active" id="pills-profile" role="tabpanel"
                     aria-labelledby="pills-profile-tab">
                     <div class="wsus__mobile_menu_main_menu">
                         <div class="accordion accordion-flush" id="accordionFlushExample2">
@@ -81,8 +61,8 @@
                                 <li><a href="{{ route('invoices.cancelledInvoices') }}"><i
                                             class="fas fa-times-circle"></i>
                                         فواتير ملغاة</a></li>
-                                <li><a href="dsahboard_order.html"><i class="fas fa-list-ul"></i> مشترياتي</a></li>
-                                <li><a href="dsahboard_order.html"><i class="fas fa-list-ul"></i> الفواتير المعلقة</a>
+                                <li><a href="{{ route('invoices.myInvoices') }}"><i class="fas fa-list-ul"></i>
+                                        مشترياتي</a></li>
                                 </li>
                                 <li><a href="{{ route('users.traders') }}"><i class="fas fa-store"></i> تجار الجملة</a>
                                 </li>
@@ -95,8 +75,15 @@
                                 <li><a href="{{ route('stocks.displayed') }}"><i class="fas fa-store"></i> البضاعة
                                         المعروضة</a></li>
                                 <li><a href="{{ route('profile') }}"><i class="far fa-user"></i> بياناتي</a></li>
-                                <li><a href="dsahboard_address.html"><i class="fal fa-gift-card"></i> Addresses</a></li>
-                                <li><a href="{{ route('logout') }}"><i class="far fa-sign-out-alt"></i> تسجيل خروج</a></li>
+                                <li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <a href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+                                            class="far fa-sign-out-alt"></i> تسجيل خروج</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

@@ -33,7 +33,7 @@
                                                                 <div class="wsus__product_details overflow-hidden">
 
                                                                     <a class="wsus__pro_name d-block fw-bold text-primary"
-                                                                        href="#"
+                                                                        href="{{ route('stocks.show', $stock->user->id) }}"
                                                                         style="max-width: 100%; font-size: 18px;">
                                                                         {{ $stock->user->shop }}
                                                                     </a>

@@ -53,6 +53,31 @@
 
 <!--main/custom js-->
 <script src="{{ asset('frontend/js/main.js') }}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // حفظ التبويب عند التبديل
+        document.querySelectorAll('[data-bs-toggle="pill"]').forEach(button => {
+            button.addEventListener("shown.bs.tab", function(e) {
+                const activeTabId = e.target.id;
+                sessionStorage.setItem("activeTabId", activeTabId);
+            });
+        });
+
+        // استعادة التبويب عند تحميل الصفحة
+        const savedTabId = sessionStorage.getItem("activeTabId");
+        if (savedTabId) {
+            const tab = document.getElementById(savedTabId);
+            if (tab) {
+                new bootstrap.Tab(tab).show();
+            }
+        } else {
+            // تعيين تبويب افتراضي لو مفيش محفوظ
+            new bootstrap.Tab(document.getElementById("pills-profile-tab")).show();
+        }
+    });
+</script>
+
 </body>
 
 </html>

@@ -111,6 +111,15 @@ class InvoiceController extends Controller
                           ->paginate(15);
         return view('frontend.invoices.doneInvoices', compact('invoices'));
     }
+
+    public function myInvoices()
+    {
+        $invoices= Invoice::where('user_id', Auth::user()->id)
+                          ->where('done', 1)
+                          ->with('user', 'seller')
+                          ->paginate(15);
+        return view('frontend.invoices.myInvoices', compact('invoices'));
+    }
     public function cancelledInvoices()
     {
         $invoices= Invoice::where('seller_id', Auth::user()->id)

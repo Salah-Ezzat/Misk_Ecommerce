@@ -62,8 +62,8 @@
                                                                         <strong><i class="fas fa-route"></i> نطاق
                                                                             التغطية:</strong> {{ $user->cover }}
                                                                     </p>
-                                                                   
-                                                                    
+
+
 
                                                                 </div>
                                                             </div>
