@@ -36,7 +36,6 @@
                 </a>
             </li>
 
-            <li class="menu-header">العملاء</li>
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown">
                     <i class="fas fa-users"></i>
@@ -48,7 +47,6 @@
                 </ul>
             </li>
 
-            <li class="menu-header">المناطق</li>
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown">
                     <i class="fas fa-map-marked-alt"></i>
@@ -60,11 +58,47 @@
                 </ul>
             </li>
 
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown">
+                    <i class="fas fa-chart-line"></i>
+                    <span>تقارير العملاء </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ route('evaluations.filter') }}">تقارير </a></li>
+                    <li><a class="nav-link" href="{{ route('evaluations.howMany') }}">إحصائيات </a></li>
+                </ul>
+            </li>
             <li>
                 <a class="nav-link" href="{{ route('banners.index') }}">
                     <i class="fas fa-bullhorn"></i>
                     <span>الإعلانات</span>
                 </a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown">
+                    <i class="fas fa-store"></i>
+                    <span> التجار </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('users.traders') }}"><i class="fas fa-store"></i> تجار الجملة</a>
+                    </li>
+                    <li><a href="{{ route('users.wholesalers') }}"><i class="fas fa-warehouse"></i> تجار
+                            جملة
+                            الجملة</a></li>
+                    <li><a href="{{ route('stocks.index') }}"><i class="fas fa-clipboard-list"></i> بضاعة
+                            غير
+                            معروضة</a></li>
+                    <li><a href="{{ route('stocks.displayed') }}"><i class="fas fa-store"></i> البضاعة
+                            المعروضة</a></li>
+                </ul>
+            <li><a href="{{ route('profile') }}"><i class="far fa-user"></i> بياناتي</a></li>
+            <li>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+                     class="fas fa-sign-out-alt"></i> تسجيل خروج</a>
             </li>
 
         </ul>

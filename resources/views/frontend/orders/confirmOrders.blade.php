@@ -118,21 +118,13 @@
 
                                             <td class="quentity">
                                                 <div style="display: flex; align-items: center; gap: 5px;">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-light border quantity-decrease"
-                                                        data-id="{{ $stock->id }}">-</button>
+                                                   
 
-                                                    <input type="number" class="form-control text-center quantity-input"
-                                                        value="{{ $Quantity ?? 0 }}" name="quantity[]" style="width: 60px;"
-                                                        data-id="{{ $stock->id }}" data-price="{{ $price }}"
-                                                        data-max="{{ $stock->max_limit }}"
-                                                        data-original-quantity="{{ $Quantity ?? 0 }}" />
+                                                    {{ $Quantity ?? 0 }}
 
 
 
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-light border quantity-increase"
-                                                        data-id="{{ $stock->id }}">+</button>
+                                                    
                                                 </div>
                                             </td>
 
@@ -153,11 +145,11 @@
                     </p>
                     <p>
                         <span class="label">رسوم إضافية :</span>
-                        <input type="number" id="extraFees" value="0.00" step="0.01" class="form-control">
+                        <input type="number" id="extraFees" value="0.00" step="0.01" class="form-control" readonly>
                     </p>
                     <p>
                         <span class="label">خصم:</span>
-                        <input type="number" id="discount" value="0.00" step="0.01" class="form-control">
+                        <input type="number" id="discount" value="0.00" step="0.01" class="form-control" readonly>
                     </p>
                     <p>
                         <span class="label">إجمالي الفاتورة:</span>
@@ -169,18 +161,19 @@
 
 
                 <!-- أزرار -->
-                <div class="text-center my-4">
-                    <button type="submit" class="btn btn-success mx-2">
+                <div class="text-center my-4"
+                style="position: fixed; bottom: 20px; left: 0; right: 0; z-index: 9999; background: transparent;">
+                               <button type="submit" class="btn btn-success mx-2">
                         <i class="fas fa-paper-plane"></i> إرسال
                     </button>
 
 
 
 
-                    <a href="#" type="button" id="rejectButton" class="btn btn-danger mx-2">
-                        <i class="fas fa-times-circle"></i> رفض
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> عودة
                     </a>
-
+                    
                     </form>
 
 

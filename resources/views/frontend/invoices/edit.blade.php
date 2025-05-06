@@ -112,8 +112,8 @@
                                         <input type="hidden" name="cart_ids[]" value="{{ $cart->id }}">
                                         <tr>
                                             <td class="images">
-                                                <img src="{{ asset('backend/assets/img/images/' . $cart->product->firstImage->image) }}"
-                                                    alt="product" class="img-fluid w-100">
+                                                <img src="{{ asset('backend/assets/img/images/' . ($cart->product && $cart->product->firstImage ? $cart->product->firstImage->image : 'NO_Image.jpg')) }}"
+                                                alt="product" class="img-fluid w-100">
                                             </td>
 
                                             <td class="name">

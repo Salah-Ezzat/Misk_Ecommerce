@@ -236,7 +236,7 @@
                                 <nav class="d-inline-block">
                                     <!-- Pagination Links -->
                                     <div class="pagination">
-                                        {{ $products->appends(request()->query())->links() }}
+                                        {{ $stocks->appends(request()->query())->links() }}
                                     </div>
                                 </nav>
                             </div>

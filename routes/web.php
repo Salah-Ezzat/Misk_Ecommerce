@@ -11,6 +11,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ProvinceController;
 
 /*
@@ -26,8 +27,8 @@ use App\Http\Controllers\ProvinceController;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/dashboard2', function () {
+    return view('dashboard2');
 });
 
 Route::get('/index', function () {
@@ -36,7 +37,7 @@ Route::get('/index', function () {
 
 // Route Dashboard محمية مسبقًا
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard2');
 })->middleware(['auth'])->name('dashboard');
 
 // ----------------------------
@@ -83,12 +84,14 @@ Route::middleware(['auth'])->group(function () {
     // Invoices
     Route::get('invoices/{id}/prepare', [InvoiceController::class, 'prepare'])->name('invoices.prepare');
     Route::get('invoices/{id}/confirm', [InvoiceController::class, 'confirm'])->name('invoices.confirm');
+    Route::get('invoices/{id}/delete', [InvoiceController::class, 'delete'])->name('invoices.delete');
     Route::get('invoices/done', [InvoiceController::class, 'doneInvoices'])->name('invoices.doneInvoices');
     Route::get('invoices/myInvoices', [InvoiceController::class, 'myInvoices'])->name('invoices.myInvoices');
     Route::get('invoices/cancelled', [InvoiceController::class, 'cancelledInvoices'])->name('invoices.cancelledInvoices');
     Route::get('invoices/prepared', [InvoiceController::class, 'preparedInvoices'])->name('invoices.preparedInvoices');
     Route::get('invoices/new', [InvoiceController::class, 'newInvoices'])->name('invoices.newInvoices');
     Route::get('invoices/suspend', [InvoiceController::class, 'suspendInvoices'])->name('invoices.suspendInvoices');
+   
     Route::resource('invoices', InvoiceController::class);
 
 
@@ -97,6 +100,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('orders/{id}/show', [OrderController::class, 'show'])->name('orders.show');
     Route::get('orders/{invoice_id}/editform', [OrderController::class, 'editform'])->name('orders.editform');
     Route::resource('orders', OrderController::class);
+
+      // Evaluations
+      Route::get('evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
+      Route::get('evaluations/evaluation', [EvaluationController::class, 'evaluation'])->name('evaluations.evaluation');
+      Route::get('evaluations/statistics', [EvaluationController::class, 'statistics'])->name('evaluations.statistics');
+      Route::get('evaluations/filter', [EvaluationController::class, 'filter'])->name('evaluations.filter');
+      Route::get('evaluations/howMany', [EvaluationController::class, 'howMany'])->name('evaluations.howMany');
 });
 
 require __DIR__ . '/auth.php';

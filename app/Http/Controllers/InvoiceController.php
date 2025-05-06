@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\User;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -157,4 +158,6 @@ class InvoiceController extends Controller
                           ->paginate(15);
         return view('frontend.invoices.suspendInvoices', compact('invoices'));
     }
+
+   
 }

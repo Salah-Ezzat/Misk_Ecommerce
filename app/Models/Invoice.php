@@ -17,8 +17,7 @@ class Invoice extends Model
         'confirm',
         'prepare',
         'edit_cause',
-        'notes',
-        'requested'
+        'notes'
 ];
 
 

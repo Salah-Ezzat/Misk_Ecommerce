@@ -17,8 +17,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+  
     }
+
+
+    
 
     /**
      * Show the form for creating a new resource.

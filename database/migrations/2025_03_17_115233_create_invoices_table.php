@@ -22,7 +22,6 @@ return new class extends Migration
             $table->float('real_total')->default(0);
             $table->foreignId('edit_cause')->nullable()->constrained('causes')->nullOnDelete();
             $table->string('notes')->default('لا توجد توصيات');
-            $table->tinyInteger('requested')->default(0);
             $table->timestamps();
         });
     }

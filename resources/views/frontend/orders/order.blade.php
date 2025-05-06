@@ -162,8 +162,9 @@
 
 
                 <!-- أزرار -->
-                <div class="text-center my-4">
-                    <button type="submit" class="btn btn-success mx-2">
+                <div class="text-center my-4"
+                style="position: fixed; bottom: 20px; left: 0; right: 0; z-index: 9999; background: transparent;">
+                               <button type="submit" class="btn btn-success mx-2">
                         <i class="fas fa-paper-plane"></i> إرسال
                     </button>
 
